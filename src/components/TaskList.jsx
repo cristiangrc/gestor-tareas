@@ -11,10 +11,10 @@ function TaskList({ tasks, onDelete, onUpdate }) {
         ) : (
           tasks.map(task => (
             <TaskItem 
-              key={task.id} // Identificador único necesario para que React gestione bien la lista
-              task={task}   // Pasamos el objeto completo de la tarea
-              onDelete={onDelete} // Pasamos la función para eliminar hacia abajo
-              onUpdate={onUpdate} // Pasamos la función para actualizar hacia abajo
+              key={task.id} 
+              task={task}   
+              onDelete={onDelete} 
+              onUpdate={onUpdate} 
             />
           ))
         )}
