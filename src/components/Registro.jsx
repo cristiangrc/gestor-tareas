@@ -19,7 +19,6 @@ function Registro() {
 
       if (res.ok) {
         alert("¡Usuario registrado con éxito! Ahora puedes iniciar sesión.");
-         window.location.href = "/login";
       } else {
         
         alert(data.error || "Error al registrarse");
@@ -65,9 +64,6 @@ function Registro() {
         Registrarse
       </button>
       
-      <p>
-        ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
-      </p>
     </form>
   );
 }
