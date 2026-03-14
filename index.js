@@ -49,7 +49,7 @@ db.connect()
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // 2. Guardar en la DB
+    
     const result = await db.query(
       "INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING id, email",
       [nombre, email, hashedPassword]
@@ -72,7 +72,7 @@ app.post("/api/auth/login", async (req, res) => {
 
     const user = result.rows[0];
 
-    // 2. Comparar la contraseña enviada con la encriptada
+    
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ error: "Credenciales inválidas" });
@@ -82,7 +82,7 @@ app.post("/api/auth/login", async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email }, 
       process.env.JWT_SECRET, 
-      { expiresIn: '2h' } // El token expira en 2 horas
+      { expiresIn: '2h' } 
     );
 
     res.json({ message: "Login exitoso", token });
@@ -107,9 +107,9 @@ app.post("/api/auth/forgot-password", async (req, res) => {
       return res.status(404).json({ error: "No existe un usuario con ese email" });
     }
 
-    // 3. Configurar el envío de correo (Ejemplo con Gmail o Mailtrap)
+    // 3. Configurar el envío de correo 
     const transporter = nodemailer.createTransport({
-       service: 'gmail', // O tu proveedor
+       service: 'gmail', 
        auth: {
          user: process.env.EMAIL_USER,
          pass: process.env.EMAIL_PASS
@@ -133,18 +133,19 @@ app.post("/api/auth/forgot-password", async (req, res) => {
 
 app.post("/api/auth/reset-password", async (req, res) => {
   const { token, newpassword } = req.body;
+
+  const cleanToken = token.trim(); 
+
   try {
-    // 1. Encriptar la nueva clave
     const hashedPassword = await bcrypt.hash(newpassword, 10);
 
-    // 2. Buscar usuario con ese token y actualizar
     const result = await db.query(
       "UPDATE usuarios SET password = $1, token_recuperacion = NULL WHERE token_recuperacion = $2 RETURNING id",
-      [hashedPassword, token]
+      [hashedPassword, cleanToken]
     );
 
     if (result.rows.length === 0) {
-      return res.status(400).json({ error: "Token inválido o expirado" });
+      return res.status(400).json({ error: "Token inválido o no encontrado" });
     }
 
     res.json({ message: "Contraseña actualizada con éxito" });
@@ -152,7 +153,6 @@ app.post("/api/auth/reset-password", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 
 app.get("/api/tareas", verifyToken, async (req, res) => {
@@ -168,16 +168,16 @@ app.get("/api/tareas", verifyToken, async (req, res) => {
 app.get("/api/tarea/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id; // Obtenemos el ID del usuario del token
+    const userId = req.user.id; 
 
-    // Agregamos 'AND user_id = $2' para asegurar la privacidad
+    
     const result = await db.query(
       'SELECT * FROM tareas WHERE id=$1 AND user_id=$2', 
       [id, userId]
     );
     
     if (result.rows.length === 0) {
-      // Ocultamos si existe o no la tarea para mayor seguridad
+      
       return res.status(404).json({ error: "Tarea no encontrada o no te pertenece" });
     }
     
@@ -192,7 +192,6 @@ app.post("/api/tareas", verifyToken, async (req, res) => {
   try {
     const { title, descripcion } = req.body;
     
-    // El 'user_id' viene del middleware verifyToken
     const userId = req.user.id; 
 
     const result = await db.query(
@@ -210,7 +209,7 @@ app.put("/api/tareas/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     const { title, descripcion } = req.body;
-    const userId = req.user.id; // Obtenemos al dueño desde el token
+    const userId = req.user.id; 
 
     // Actualizamos solo si el ID de la tarea Y el user_id coinciden
     const result = await db.query(
@@ -231,7 +230,7 @@ app.put("/api/tareas/:id", verifyToken, async (req, res) => {
 app.delete("/api/tareas/:id", verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id; // Obtenemos el dueño desde el token
+    const userId = req.user.id; 
     
     // Filtramos que la tarea pertenezca al usuario del token
     const result = await db.query(
