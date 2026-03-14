@@ -22,9 +22,9 @@ if (res.ok) {
     // Si el login es correcto, guardamos el token
     localStorage.setItem("token", data.token);
     alert("Login exitoso");
-    window.location.href = "/tareas";
+    window.location.href = "/"
 } else {
-    // Si las credenciales son incorrectas
+   
     alert(data.error || "Error al iniciar sesión");
 }
 
@@ -55,6 +55,12 @@ return (
             onChange={(e) => setPassword(e.target.value)} 
         />
         <button type="submit" className="login-button">Entrar</button>
+
+    <div className = "forgot">
+        <a href="/"></a>
+       
+        
+    </div> 
     </form>
 )
 
