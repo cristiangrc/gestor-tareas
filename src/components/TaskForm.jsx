@@ -20,7 +20,7 @@ function TaskForm({ onAdd }) {
 
   return (
     <form className="task-form" onSubmit={handleSubmit}>
-      {/* Campo de entrada para el título - es obligatorio (required) */}
+     
       <input
         placeholder="Título"
         value={title}
@@ -28,14 +28,13 @@ function TaskForm({ onAdd }) {
         required
       />
 
-      {/* Campo de texto multilínea para la descripción opcional */}
+    
       <textarea
         placeholder="Descripción"
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
       />
 
-      {/* El botón de tipo submit activa el evento onSubmit del formulario */}
       <button type="submit">Agregar</button>
     </form>
   );
