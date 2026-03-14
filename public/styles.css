@@ -103,9 +103,9 @@ h2 {
   border: 2px dashed #e5e7eb;
 }
 
-/* Item de tarea - CORREGIDO */
+
 .task-item {
-  display: flex; /* Alineación en fila */
+  display: flex; 
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
@@ -136,7 +136,7 @@ h2 {
   margin-bottom: 0;
 }
 
-/* Botones de acción - CORREGIDO */
+
 .task-actions {
   display: flex;
   gap: 0.5rem;
@@ -152,7 +152,7 @@ h2 {
   transition: opacity 0.2s;
 }
 
-/* Botón Editar */
+
 .btn-edit {
   background-color: #f59e0b;
   color: white;
@@ -162,7 +162,7 @@ h2 {
   background-color: #d97706;
 }
 
-/* Botón Eliminar */
+
 .btn-delete {
   background-color: #ef4444;
   color: white;
@@ -228,7 +228,7 @@ h2 {
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
     outline: none;
-    box-sizing: border-box; /* Importante para que no se salga del contenedor */
+    box-sizing: border-box; 
 }
 
 .login-input:focus {
@@ -260,7 +260,7 @@ h2 {
     transform: scale(0.98);
 }
 
-/* Texto de ayuda (¿Ya tienes cuenta?) */
+
 .login-footer {
     text-align: center;
     margin-top: 20px;
@@ -286,8 +286,8 @@ h2 {
 
 
 .login-button2 {
-    position: absolute; /* Saca el botón del flujo normal */
-    top: 20px;          /* Distancia desde arriba */
+    position: absolute; 
+    top: 20px;          
     right: 20px;
     color: black;
     background-color: orangered;
